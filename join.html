@@ -19,8 +19,10 @@ a.btn{display:block;background:var(--acc);color:#fff;text-decoration:none;font-w
 <p>還沒安裝？先從 TestFlight 安裝，再回來點一次。<br>打不開的話：打開 app › 老師／管理員 › 加入工作空間，輸入上面的代碼。</p>
 </main>
 <script>
-// 只讀網址上的 6 位數字代碼，轉成 app 的連結；不送出任何資料
-var c=(new URLSearchParams(location.search).get('code')||'').replace(/\D/g,'').slice(0,6);
+// 只讀網址上的 6 位數字代碼，轉成 app 的連結；不送出任何資料。
+// 代碼放在 # 後面：瀏覽器不會把 # 後面送到伺服器（舊連結的 ?code= 也還認得）
+var h=new URLSearchParams(location.hash.slice(1));
+var c=(h.get('code')||new URLSearchParams(location.search).get('code')||'').replace(/\D/g,'').slice(0,6);
 document.getElementById('code').textContent=c||'——';
 var u='orbitune://join?code='+c;
 document.getElementById('open').href=u;
